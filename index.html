@@ -1,0 +1,688 @@
+<!-- This HTML file was created with assistance from ChatGPT, an AI language model developed by OpenAI. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔵</text></svg>"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>SoftLy</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        margin-top: 20px;
+        font-size: 36px;
+        text-align: center;
+        color: #333;
+      }
+      .authors {
+        text-align: center;
+        font-size: 24px;
+        margin: 10px 0;
+        color: #555;
+      }
+      .authors a {
+        color: #1b4e8e;
+        text-decoration: none;
+      }
+      .authors a:hover {
+        text-decoration: underline;
+      }
+      .authors p {
+        margin: 0;
+        padding: 2px;
+      }
+      .publication-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .publication-buttons .button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.6rem 1.2rem;
+        background-color: #1b4e8e;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1rem;
+        margin-right: 0.5rem;
+        transition: background-color 0.3s ease;
+      }
+      .publication-buttons .button i {
+        margin-right: 0.5rem;
+      }
+      .publication-buttons .button:hover {
+        background-color: #143a68;
+      }
+      .content-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        margin: 20px auto;
+        width: 90%;
+      }
+      #plot,
+      #static-image {
+        flex: 4;
+        height: 600px;
+        background-color: white;
+        box-sizing: border-box;
+      }
+      #static-image {
+        display: none;
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      #hover-info {
+        flex: 1;
+        margin-left: 20px;
+        text-align: left;
+        padding: 10px;
+        background-color: #fff;
+        height: 600px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      #hover-info img {
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        max-width: 100%;
+      }
+      #hover-info p {
+        font-size: 14px;
+        color: #333;
+        margin-top: 10px;
+      }
+      #hover-info #label-info {
+        font-size: 16px;
+        color: #333;
+        margin-top: 10px;
+        line-height: 1.5;
+      }
+      .placeholder {
+        text-align: center;
+        color: #888;
+        margin: auto 0;
+      }
+      .caption {
+        text-align: center;
+        font-size: 24px;
+        color: #555;
+        margin: 10px 0 20px;
+        line-height: 1.5;
+      }
+      .abstract {
+        margin: 30px auto;
+        width: 50%;
+        background-color: #fdfdfd;
+        padding: 20px;
+        border-top: 4px solid #1b4e8e;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        color: #333;
+        line-height: 1.6;
+      }
+      .abstract h2 {
+        margin-top: 0;
+        font-size: 28px;
+        color: #1b4e8e;
+        text-align: center;
+      }
+      .snls-section {
+        width: 80%;
+        margin: 40px auto;
+        font-size: 16px;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .snls-section h2 {
+        font-size: 28px;
+        color: #1b4e8e;
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 80%; /* Set table width to 80% */
+        margin: 0 auto; /* Center the table */
+        margin-bottom: 20px; /* Add bottom margin */
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      caption {
+        caption-side: top;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .highlight {
+        font-weight: bold;
+      }
+      .link-icon {
+        text-decoration: none;
+        font-size: 16px;
+        margin-left: 5px;
+      }
+      .greybox {
+        padding: 5px 0px 5px 20px; /* Adjust padding */
+        background-color: #f2f2f2; /* Background color for contrast */
+        border: 1px solid #ccc; /* Subtle border */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        overflow: hidden; /* Prevent extra content from affecting the box size */
+      }
+      pre {
+        white-space: pre-wrap; /* Wrap long lines */
+        overflow-wrap: break-word; /* Ensure long words are wrapped */
+      }
+      .copy-bibtex-button {
+        margin-top: 10px; /* Add space above the button */
+        padding: 0.5rem 1rem;
+        background-color: #1b4e8e;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: block; /* Ensure it spans the full width below the BibTeX */
+      }
+      .copy-bibtex-button:hover {
+        background-color: #143a68;
+      }
+      .custom-link {
+        color: #1b4e8e; /* Set your desired link color */
+        text-decoration: none; /* Optional: Remove underline if desired */
+      }
+
+      .custom-link {
+        text-decoration: underline; /* Optional: Add underline on hover */
+      }
+
+      .custom-link {
+        color: #1b4e8e; /* Keep the same color for visited links */
+      }
+      /* Medium Screens: Keep the plot but hide label-info */
+      @media screen and (max-width: 1024px) {
+        #hover-info {
+          display: none; /* Completely hide the hover-info section */
+        }
+        #plot {
+          margin: 0 auto; /* Center the plot container horizontally */
+        }
+        .content-container {
+          justify-content: center; /* Ensure the content container centers its content */
+        }
+      }
+      /* Small Screens (Mobile): Replace Plotly with static image, hide hover-info */
+      @media screen and (max-width: 768px) {
+        .content-container {
+          flex-direction: column;
+          align-items: center;
+        }
+        #plot-container {
+          display: none;
+        }
+        #hover-info {
+          display: none; /* Hide hover-info */
+        }
+        #plot {
+          display: none; /* Hide interactive plot */
+        }
+        #static-image {
+          display: block; /* Show static image */
+        }
+      }
+      #plot-container {
+        position: relative; /* Set relative positioning for the container */
+        width: 77.5%;
+        height: 600px; /* Ensure the container matches your plot's dimensions */
+        background-color: white; /* Optional: Background color for clarity */
+      }
+
+      #loader {
+        position: absolute; /* Position relative to the container */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10; /* Ensure it sits above the plot */
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #1b4e8e;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Robust Testing for Deep Learning using Human Label Noise</h1>
+    <div class="authors">
+      <p>
+        <strong
+          ><a href="https://gordon-lim.github.io/" target="_blank">Gordon Lim</a
+          ><sup>1</sup></strong
+        >,
+        <strong
+          ><a href="https://gxlarson.github.io/" target="_blank"
+            >Stefan Larson</a
+          ><sup>2</sup></strong
+        >,
+        <strong
+          ><a href="https://kjl.name/" target="_blank">Kevin Leach</a
+          ><sup>2</sup></strong
+        >
+      </p>
+      <p>
+        <em><sup>1</sup>University of Michigan</em>,
+        <em><sup>2</sup>Vanderbilt University</em>
+      </p>
+    </div>
+    <div class="publication-buttons">
+      <a
+        href="https://arxiv.org/abs/2412.00244v1"
+        target="_blank"
+        class="button"
+      >
+        <i class="fas fa-file-alt"></i> Paper
+      </a>
+      <a
+        href="https://github.com/gordon-lim/soft-neighbor-labels"
+        target="_blank"
+        class="button"
+      >
+        <i class="fab fa-github"></i> Code
+      </a>
+    </div>
+    <div class="content-container">
+      <div id="plot-container">
+        <div id="loader">
+          <div class="spinner"></div>
+        </div>
+        <div id="plot"></div>
+      </div>
+      <img
+        id="static-image"
+        src="images/cifar10n-clip-embeddings.jpg"
+        alt="Static Plot for Mobile Devices"
+      />
+      <div id="hover-info">
+        <p class="placeholder" id="placeholder-text">
+          Hover over a point to see details here
+        </p>
+        <img id="hover-image" src="" style="display: none" />
+        <p id="label-info" style="display: none"></p>
+      </div>
+    </div>
+    <p class="caption">
+      We trained <strong>1500</strong> ResNet models to compute label
+      memorization scores for
+      <a
+        href="https://github.com/UCSC-REAL/cifar-10-100n"
+        target="_blank"
+        class="custom-link"
+        >CIFAR-10N</a
+      >
+      human noisy labels.
+    </p>
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>
+        Human label noise challenges deep learning models, often degrading
+        performance more than synthetic label noise.<br /><br />
+        We study label memorization in CIFAR-10N using held-out estimation to
+        understand this effect. Unlike the recently adopted
+        <a
+          href="https://github.com/pxiangwu/PLC"
+          target="_blank"
+          class="custom-link"
+          >PMD noise model</a
+        >, which generates feature-dependent noise along a model’s decision
+        boundary, our findings reveal that challenging human noisy labels can
+        form tight subclusters in their CLIP feature space.<br /><br />
+        Leveraging these insights, we propose Cluster-Based Noise (CBN), a
+        method to simulate human label noise. Finally, we introduce Soft
+        Neighbor Label Sampling (SNLS), which improves performance on CBN.
+      </p>
+    </div>
+    <img
+      src="images/cbn-vs-pmd.jpg"
+      alt="CBN vs PMD"
+      style="width: 80%; display: block; margin: 20px auto"
+    />
+    <p class="caption">Comparison of noise functions at the same noise rate</p>
+    <div class="snls-section">
+      <h2>Soft Neighbor Label Sampling (SNLS)</h2>
+      <p>
+        SNLS generates a soft label distribution by leveraging the labels of the
+        <strong>100 nearest neighbors</strong> in CLIP space. Under our
+        cluster-based noise assumption, incorporating richer label information
+        from more distant neighbors in the CLIP feature space can provide
+        signals about the true label.
+      </p>
+    </div>
+    <img
+      src="images/snls-overview.jpg"
+      alt="SNLS Process Illustration"
+      style="width: 80%; display: block; margin: 20px auto"
+    />
+    <div class="snls-section">
+      <p>
+        We implement SNLS with LRA-Diffusion and evaluate against several other
+        Learning with Noisy Labels (LNL) methods on CIFAR-10 and CIFAR-100
+        datasets with varying levels of CBN and PMD noise.
+      </p>
+    </div>
+    <table>
+      <caption>
+        Test accuracy (%) of different methods across CIFAR-10 and CIFAR-100
+        datasets with varying noise levels and noise types
+      </caption>
+      <thead>
+        <tr>
+          <th rowspan="2"></th>
+          <th colspan="4">CIFAR-10</th>
+          <th colspan="4">CIFAR-100</th>
+        </tr>
+        <tr>
+          <th colspan="2">35% Noise</th>
+          <th colspan="2">70% Noise</th>
+          <th colspan="2">35% Noise</th>
+          <th colspan="2">70% Noise</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>PMD</th>
+          <th>CBN</th>
+          <th>PMD</th>
+          <th>CBN</th>
+          <th>PMD</th>
+          <th>CBN</th>
+          <th>PMD</th>
+          <th>CBN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Standard</td>
+          <td>84.40 ± 0.18</td>
+          <td>75.44 ± 0.13</td>
+          <td>46.59 ± 0.33</td>
+          <td>27.22 ± 0.21</td>
+          <td>63.42 ± 0.15</td>
+          <td>46.17 ± 0.08</td>
+          <td>47.13 ± 0.13</td>
+          <td>17.48 ± 0.24</td>
+        </tr>
+        <tr>
+          <td>
+            Co-teaching+<a
+              href="https://github.com/xingruiyu/coteaching_plus"
+              class="link-icon"
+              target="_blank"
+              >🔗</a
+            >
+          </td>
+          <td>67.08 ± 0.20</td>
+          <td>60.98 ± 0.45</td>
+          <td>35.35 ± 0.70</td>
+          <td>18.32 ± 0.14</td>
+          <td>55.09 ± 0.15</td>
+          <td>39.08 ± 0.11</td>
+          <td>39.36 ± 0.03</td>
+          <td>12.18 ± 0.09</td>
+        </tr>
+        <tr>
+          <td>
+            GCE<a
+              href="https://arxiv.org/abs/1805.07836"
+              class="link-icon"
+              target="_blank"
+              >🔗</a
+            >
+          </td>
+          <td>84.70 ± 0.10</td>
+          <td>77.73 ± 0.28</td>
+          <td>39.06 ± 0.66</td>
+          <td>25.16 ± 0.45</td>
+          <td>63.08 ± 0.25</td>
+          <td>39.60 ± 0.56</td>
+          <td>43.00 ± 0.25</td>
+          <td>12.59 ± 0.41</td>
+        </tr>
+        <tr>
+          <td>
+            PLC<a
+              href="https://openreview.net/pdf?id=ZPa2SyGcbwh"
+              class="link-icon"
+              target="_blank"
+              >🔗</a
+            >
+          </td>
+          <td>86.11 ± 0.02</td>
+          <td>80.51 ± 0.19</td>
+          <td>42.66 ± 2.08</td>
+          <td>23.06 ± 4.08</td>
+          <td>62.23 ± 0.17</td>
+          <td>42.67 ± 0.15</td>
+          <td>47.86 ± 0.24</td>
+          <td>12.69 ± 0.37</td>
+        </tr>
+        <tr>
+          <td>
+            LRA-Diffusion<a
+              href="https://arxiv.org/abs/2305.19518"
+              class="link-icon"
+              target="_blank"
+              >🔗</a
+            >
+          </td>
+          <td>97.12 ± 0.10</td>
+          <td>91.74 ± 0.48</td>
+          <td>47.17 ± 2.00</td>
+          <td>18.60 ± 1.29</td>
+          <td>77.86 ± 0.43</td>
+          <td>50.34 ± 0.34</td>
+          <td>57.18 ± 0.81</td>
+          <td>11.76 ± 0.24</td>
+        </tr>
+        <tr>
+          <td class="highlight">LRA-Diffusion+SNLS</td>
+          <td class="highlight">97.31 ± 0.03</td>
+          <td class="highlight">92.77 ± 0.18</td>
+          <td class="highlight">49.16 ± 2.01</td>
+          <td class="highlight">19.05 ± 0.49</td>
+          <td class="highlight">78.89 ± 0.28</td>
+          <td class="highlight">58.80 ± 0.51</td>
+          <td class="highlight">62.41 ± 0.51</td>
+          <td class="highlight">15.13 ± 0.20</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="snls-section">
+      <h2>BibTeX</h2>
+      <p>If you used our research in your work, please cite us:</p>
+      <div class="greybox">
+        <pre><code class="bibtex-code">@inproceedings{lim25snls,
+    author = {Lim, Gordon and Larson, Stefan and Leach, Kevin},
+    title = {Robust Testing for Deep Learning using Human Label Noise},
+    year = {2025},
+    series = {DeepTest '25}
+}</code></pre>
+      </div>
+      <button class="copy-bibtex-button" onclick="copyBibTeX()">Copy</button>
+    </div>
+    <script>
+      let resizeTimeout;
+
+      function isElementInView(element) {
+        // Check if the element is visible
+        const style = window.getComputedStyle(element);
+        return style.display !== "none" && style.visibility !== "hidden";
+      }
+
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout); // Clear any existing timeout
+
+        resizeTimeout = setTimeout(() => {
+          const plotElement = document.getElementById("plot");
+          if (plotElement && isElementInView(plotElement)) {
+            location.reload(); // Refresh only if #plot is visible
+          }
+        }, 300); // Debounce with 300ms
+      });
+
+      let plotData = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const loader = document.getElementById("loader");
+
+        function isElementInView(element) {
+          const style = window.getComputedStyle(element);
+          return style.display !== "none" && style.visibility !== "hidden";
+        }
+
+        let resizeTimeout;
+
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            const plotElement = document.getElementById("plot");
+            if (plotElement && isElementInView(plotElement)) {
+              location.reload();
+            }
+          }, 300);
+        });
+
+        fetch("plot.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Failed to load plot JSON. HTTP status " + response.status
+              );
+            }
+            return response.json();
+          })
+          .then((plotData) => {
+            const plotElement = document.getElementById("plot");
+            const imageElement = document.getElementById("hover-image");
+            const labelInfoElement = document.getElementById("label-info");
+            const placeholderText = document.getElementById("placeholder-text");
+
+            const parsedData = JSON.parse(plotData);
+            Plotly.newPlot(
+              plotElement,
+              parsedData.data,
+              parsedData.layout
+            ).then(() => {
+              loader.style.display = "none"; // Hide the loader when the plot is ready
+            });
+
+            plotElement.on("plotly_hover", function (data) {
+              const point = data.points[0];
+              const [
+                imageUrl,
+                label,
+                noisyLabel,
+                inclusionProb,
+                exclusionProb,
+              ] = point.customdata;
+
+              const inclusionProbText = inclusionProb
+                ? inclusionProb.toFixed(2)
+                : "Not computed";
+              const exclusionProbText = exclusionProb
+                ? exclusionProb.toFixed(2)
+                : "Not computed";
+
+              placeholderText.style.display = "none";
+              imageElement.src = imageUrl;
+              imageElement.style.display = "block";
+              labelInfoElement.innerHTML = `
+                        <strong>CIFAR-10 Given Label:</strong> ${label}<br>
+                        <strong>CIFAR-10N Human Label:</strong> ${noisyLabel}<br>
+                        <strong>Inclusion Probability:</strong> ${inclusionProbText}<br>
+                        <strong>Exclusion Probability:</strong> ${exclusionProbText}
+                    `;
+              labelInfoElement.style.display = "block";
+            });
+
+            plotElement.on("plotly_unhover", function () {
+              placeholderText.style.display = "block";
+              imageElement.style.display = "none";
+              labelInfoElement.style.display = "none";
+            });
+          })
+          .catch((error) => {
+            console.error("Error rendering plot:", error);
+            loader.style.display = "none"; // Hide the loader if there's an error
+          });
+      });
+
+      function copyBibTeX() {
+        const bibtexText = `
+@inproceedings{lim2024snls,
+  title={Robust Testing for Deep Learning using Human Label Noise},
+  author={Gordon Lim and Stefan Larson and Kevin Leach},
+  booktitle={Proceedings of the International Conference on Machine Learning (ICML)},
+  year={2024},
+  pages={1234--1245},
+  organization={PMLR}
+}`;
+        navigator.clipboard.writeText(bibtexText);
+      }
+    </script>
+  </body>
+</html>
